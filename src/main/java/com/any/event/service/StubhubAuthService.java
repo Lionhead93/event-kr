@@ -1,8 +1,8 @@
 package com.any.event.service;
 
+import com.any.event.config.stubhub.StubhubProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,37 +21,29 @@ import java.util.Objects;
 @Service
 public class StubhubAuthService {
 
-    @Value("${stubhub.api.key}")
-    private String STUB_KEY;
-    @Value("${stubhub.api.secret}")
-    private String STUB_SECRET;
-    @Value("${stubhub.access.url}")
-    private String STUB_ACESS_URL;
-    @Value("${stubhub.username}")
-    private String STUB_USERNAME;
-    @Value("${stubhub.password}")
-    private String STUB_PASSWORD;
     private String STUB_TOKEN;
     private final RestTemplate restTemplate;
+    private final StubhubProperties stubhubProperties;
     @Autowired
-    public StubhubAuthService(RestTemplate restTemplate) {
+    public StubhubAuthService(RestTemplate restTemplate, StubhubProperties stubhubProperties) {
         this.restTemplate = restTemplate;
+        this.stubhubProperties = stubhubProperties;
     }
 
-    @PostConstruct
+    //@PostConstruct
     public void init(){
         log.info("init Time : ########{}##########",System.currentTimeMillis());
         getAcessTokenRequest();
     }
 
     private void getAcessTokenRequest(){
-        String fm = String.format("%s:%s",STUB_KEY,STUB_SECRET);
+        String fm = String.format("%s:%s",stubhubProperties.key(),stubhubProperties.secret());
         log.info("format : #############{}##############", fm);
         String encodeString = Base64.getEncoder().encodeToString(fm.getBytes());
         log.info("encodeString : {}",encodeString);
 
         HttpEntity<?> reqBody = apiClientHttpEntity(encodeString);
-        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(STUB_ACESS_URL)
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(stubhubProperties.accessUrl())
                 .queryParam("grant_type","client_credentials");
 
         ParameterizedTypeReference<HashMap<String, Object>> responseType = new ParameterizedTypeReference<HashMap<String, Object>>() {};
@@ -68,8 +60,8 @@ public class StubhubAuthService {
         requestHeaders.set("Content-Type", "application/json");
         requestHeaders.set("Host", "api.stubhub.com");
         HashMap<String, String> reqBody = new HashMap<>();
-        reqBody.put("username",STUB_USERNAME);
-        reqBody.put("password",STUB_PASSWORD);
+        reqBody.put("username",stubhubProperties.userName());
+        reqBody.put("password",stubhubProperties.password());
         return new HttpEntity<Object>(reqBody, requestHeaders);
     }
 
