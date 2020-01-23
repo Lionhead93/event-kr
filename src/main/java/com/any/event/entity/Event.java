@@ -7,10 +7,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor @AllArgsConstructor
-@Data @Builder
-@Entity
-@Table(name="EVENT")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
+@Getter
+@Setter
+@ToString
+@Entity(name="EVENT")
 public class Event implements Serializable{
 
     @Id

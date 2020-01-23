@@ -11,18 +11,37 @@ import org.springframework.stereotype.Component;
 **/
 @ConfigurationProperties(prefix = "stubhub")
 @Component
-public abstract class StubhubProperties {
+public class StubhubProperties {
 
-    public abstract String accessUrl();
+    private String accessUrl;
+    private String eventUrl;
+    private String key;
+    private String secret;
+    private String userName;
+    private String password;
 
-    public abstract String eventUrl();
+    public String accessUrl() {
+        return this.accessUrl;
+    }
 
-    public abstract String key();
+    public String eventUrl() {
+        return this.eventUrl;
+    }
 
-    public abstract String secret();
+    public String key(){
+        return this.key;
+    }
 
-    public abstract String userName();
+    public String secret() {
+        return this.secret;
+    }
 
-    public abstract String password();
+    public String userName() {
+        return this.userName;
+    }
+
+    public String password() {
+        return this.password;
+    }
 
 }
