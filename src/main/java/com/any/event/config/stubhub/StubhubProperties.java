@@ -1,23 +1,28 @@
 package com.any.event.config.stubhub;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
 /**
 *
 *   @author seongwou
 *   @since 2019-12-18 오전 10:50
 *
 **/
-public interface StubhubProperties {
+@ConfigurationProperties(prefix = "stubhub")
+@Component
+public abstract class StubhubProperties {
 
-    String accessUrl();
+    public abstract String accessUrl();
 
-    String eventUrl();
+    public abstract String eventUrl();
 
-    String key();
+    public abstract String key();
 
-    String secret();
+    public abstract String secret();
 
-    String userName();
+    public abstract String userName();
 
-    String password();
+    public abstract String password();
 
 }

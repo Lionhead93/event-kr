@@ -3,6 +3,7 @@ package com.any.event.dto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
