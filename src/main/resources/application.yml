@@ -1,6 +1,6 @@
 # Server Port Settings
 server:
-  port: 9091
+  port: 9000
 
 spring:
   profiles: dev
