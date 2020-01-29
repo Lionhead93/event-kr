@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <p>{{ response }}</p>
+    <p>hihihihi???</p>
   </div>
 </template>
 
@@ -25,7 +26,7 @@ export default {
     helloMsg() {
       return axios({
         method: 'get',
-        url: 'http://localhost:9000/api/hello'
+        url: process.env.VUE_APP_SERVER_URL + '/api/hello'
       })
         .then(res => {
           console.log(process.env)
